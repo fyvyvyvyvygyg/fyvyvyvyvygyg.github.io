@@ -11,126 +11,182 @@
         .carbon-card { background: white; border-radius: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); padding: 20px; margin-bottom: 16px; }
         .progress-bg { background: #E2E8F0; border-radius: 20px; height: 10px; overflow: hidden; }
         .progress-fill { background: #3B82F6; height: 100%; transition: width 0.4s ease; width: 0%; }
-        input, select { border: 1px solid #EDF2F7; border-radius: 12px; padding: 12px; background: #F8FAFC; width: 100%; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #94A3B8; font-weight: 600; }
+        input, select { border: 1px solid #EDF2F7; border-radius: 12px; padding: 12px; background: #F8FAFC; width: 100%; font-size: 16px; }
+        label { font-size: 11px; font-weight: 800; color: #94A3B8; text-transform: uppercase; margin-left: 5px; margin-bottom: 4px; display: block; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #94A3B8; font-weight: 600; cursor: pointer; }
         .nav-item.active { color: #3B82F6; }
+        .page { display: none; }
+        .page.active { display: block; }
     </style>
 </head>
 <body>
 
-    <header class="p-6 flex justify-between items-center">
-        <h1 class="text-2xl font-black text-slate-800 tracking-tight">JOURNAL</h1>
-        <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center">👤</div>
-    </header>
+    <main class="max-w-md mx-auto px-5 pt-6">
 
-    <main class="max-w-md mx-auto px-5">
+        <div id="page-home" class="page active">
+            <header class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-black text-slate-800 tracking-tight">JOURNAL</h1>
+                <div class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-bold" id="status-plan">Plan actif</div>
+            </header>
 
-        <section class="carbon-card">
-            <div class="flex justify-between items-start mb-2">
-                <div>
-                    <p class="text-slate-400 text-[10px] font-extrabold uppercase tracking-widest">Calories restantes</p>
-                    <h2 class="text-4xl font-black text-slate-900" id="cal-remaining">2000</h2>
+            <section class="carbon-card">
+                <div class="flex justify-between items-start mb-2">
+                    <div>
+                        <p class="text-slate-400 text-[10px] font-extrabold uppercase tracking-widest">Restant</p>
+                        <h2 class="text-4xl font-black text-slate-900" id="cal-remaining">--</h2>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[10px] text-slate-400 font-bold uppercase">Objectif</p>
+                        <p class="font-bold text-slate-700" id="cal-target-label">--</p>
+                    </div>
                 </div>
-                <div class="bg-blue-50 p-2 rounded-lg">
-                    <span class="text-blue-600 font-bold text-xs" id="cal-target-label">Obj: 2000</span>
+                <div class="progress-bg mb-6">
+                    <div id="progress-bar" class="progress-fill"></div>
                 </div>
-            </div>
-            <div class="progress-bg mb-4">
-                <div id="progress-bar" class="progress-fill"></div>
-            </div>
-            <div class="grid grid-cols-3 gap-2">
-                <div class="bg-slate-50 p-2 rounded-xl text-center">
-                    <p class="text-[9px] text-orange-500 font-bold uppercase">Protéines</p>
-                    <p class="font-bold text-sm" id="p-val">0g</p>
+                <div class="grid grid-cols-3 gap-2">
+                    <div class="bg-slate-50 p-2 rounded-xl text-center border border-slate-100">
+                        <p class="text-[9px] text-orange-500 font-bold uppercase">Prot (g)</p>
+                        <p class="font-bold text-sm" id="p-val">0</p>
+                    </div>
+                    <div class="bg-slate-50 p-2 rounded-xl text-center border border-slate-100">
+                        <p class="text-[9px] text-blue-500 font-bold uppercase">Gluc (g)</p>
+                        <p class="font-bold text-sm" id="g-val">0</p>
+                    </div>
+                    <div class="bg-slate-50 p-2 rounded-xl text-center border border-slate-100">
+                        <p class="text-[9px] text-yellow-500 font-bold uppercase">Lip (g)</p>
+                        <p class="font-bold text-sm" id="l-val">0</p>
+                    </div>
                 </div>
-                <div class="bg-slate-50 p-2 rounded-xl text-center">
-                    <p class="text-[9px] text-blue-500 font-bold uppercase">Glucides</p>
-                    <p class="font-bold text-sm" id="g-val">0g</p>
-                </div>
-                <div class="bg-slate-50 p-2 rounded-xl text-center">
-                    <p class="text-[9px] text-yellow-500 font-bold uppercase">Lipides</p>
-                    <p class="font-bold text-sm" id="l-val">0g</p>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="carbon-card border-2 border-transparent focus-within:border-blue-500 transition-all">
-            <h3 class="font-bold text-sm mb-3 flex items-center gap-2">🍎 Ajouter un aliment</h3>
-            <div class="space-y-3">
-                <div class="flex gap-2">
-                    <input type="text" id="foodName" class="flex-[2]" placeholder="Aliment (ex: Poulet)">
-                    <input type="number" id="foodWeight" class="flex-1" placeholder="Poids (g)">
+            <section class="carbon-card border-2 border-transparent focus-within:border-blue-500 transition-all">
+                <h3 class="font-bold text-sm mb-3">🍎 Enregistrer un aliment</h3>
+                <div class="space-y-3">
+                    <div class="flex gap-2">
+                        <input type="text" id="foodName" class="flex-[2]" placeholder="Ex: Poulet">
+                        <input type="number" id="foodWeight" class="flex-1" placeholder="g">
+                    </div>
+                    <button onclick="addFood()" class="w-full bg-slate-900 text-white font-bold py-3 rounded-xl shadow-lg">Ajouter</button>
                 </div>
-                <button onclick="addFood()" class="w-full bg-slate-900 text-white font-bold py-3 rounded-xl shadow-lg">
-                    Enregistrer l'aliment
-                </button>
-            </div>
-        </section>
+            </section>
 
-        <div id="foodList" class="space-y-2">
-            </div>
+            <div id="foodList" class="space-y-2"></div>
+        </div>
+
+        <div id="page-profile" class="page">
+            <header class="mb-6">
+                <h1 class="text-2xl font-black text-slate-800 tracking-tight">MON PROFIL</h1>
+                <p class="text-slate-400 text-sm">Configure ton coach IA</p>
+            </header>
+
+            <section class="carbon-card">
+                <div class="space-y-4">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label>Âge</label>
+                            <input type="number" id="age" placeholder="25">
+                        </div>
+                        <div>
+                            <label>Sexe</label>
+                            <select id="sexe">
+                                <option value="homme">Homme</option>
+                                <option value="femme">Femme</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label>Poids (kg)</label>
+                            <input type="number" id="poids" placeholder="75">
+                        </div>
+                        <div>
+                            <label>Taille (cm)</label>
+                            <input type="number" id="taille" placeholder="180">
+                        </div>
+                    </div>
+                    <div>
+                        <label>Objectif</label>
+                        <select id="obj">
+                            <option value="-500">Perte de poids</option>
+                            <option value="0">Maintien (Équilibre)</option>
+                            <option value="300">Prise de masse</option>
+                        </select>
+                    </div>
+                    <button onclick="updateCoach()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95 transition-all">
+                        Enregistrer les modifications
+                    </button>
+                </div>
+            </section>
+        </div>
 
     </main>
 
-    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 px-6 py-3 flex justify-between items-center z-50">
-        <div class="nav-item active">
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 px-8 py-4 flex justify-between items-center z-50 shadow-[0_-5px_20px_rgba(0,0,0,0.05)]">
+        <div class="nav-item active" onclick="showPage('home')">
             <span class="text-xl">🏠</span>
-            <span>Dashboard</span>
-        </div>
-        <div class="nav-item">
-            <span class="text-xl">📝</span>
             <span>Journal</span>
         </div>
-        <div class="nav-item">
-            <span class="text-xl">📊</span>
-            <span>Progrès</span>
-        </div>
-        <div class="nav-item">
+        <div class="nav-item" onclick="showPage('profile')">
             <span class="text-xl">⚙️</span>
             <span>Profil</span>
         </div>
     </nav>
 
     <script>
-        let target = 2000;
-        let consumed = 0;
-        let prot = 0, gluc = 0, lip = 0;
+        let targetCal = 2000;
+        let consumedCal = 0;
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        function updateCoach() {
+            const age = parseFloat(document.getElementById('age').value);
+            const p = parseFloat(document.getElementById('poids').value);
+            const t = document.getElementById('taille').value;
+            const obj = parseFloat(document.getElementById('obj').value);
+
+            if(!age || !p) return alert("Remplis ton profil !");
+
+            // Calcul (Mifflin-St Jeor)
+            targetCal = Math.round((10 * p) + (6.25 * t) - (5 * age) + 5 + obj);
+            
+            document.getElementById('cal-target-label').innerText = targetCal + " kcal";
+            updateUI();
+            showPage('home'); // Retour automatique au journal
+            
+            // Simulation macros
+            document.getElementById('p-val').innerText = Math.round(p * 1.8) + "g";
+            document.getElementById('g-val').innerText = Math.round(p * 3) + "g";
+            document.getElementById('l-val').innerText = Math.round(p * 0.8) + "g";
+        }
 
         function addFood() {
             const name = document.getElementById('foodName').value;
             const weight = parseFloat(document.getElementById('foodWeight').value);
+            if(!name || !weight) return;
 
-            if(!name || !weight) return alert("Précise l'aliment et le poids !");
-
-            // Calcul fictif (on simulera une base de données après)
-            // Moyenne : 1.5 kcal par gramme pour l'exemple
-            const calAdded = Math.round(weight * 1.5);
-            consumed += calAdded;
+            const cal = Math.round(weight * 1.5); // Simulation
+            consumedCal += cal;
             
-            // Ajout visuel dans la liste
             const list = document.getElementById('foodList');
-            const item = document.createElement('div');
-            item.className = "bg-white p-3 rounded-xl flex justify-between items-center shadow-sm border border-slate-50";
-            item.innerHTML = `
-                <div>
-                    <p class="font-bold text-slate-800">${name}</p>
-                    <p class="text-xs text-slate-400">${weight}g</p>
-                </div>
-                <span class="font-bold text-blue-600">+${calAdded} kcal</span>
-            `;
-            list.prepend(item);
-
+            const item = `<div class="bg-white p-4 rounded-2xl flex justify-between items-center shadow-sm border border-slate-50">
+                <div><p class="font-bold text-slate-800">${name}</p><p class="text-xs text-slate-400">${weight}g</p></div>
+                <span class="font-bold text-blue-600">+${cal} kcal</span>
+            </div>`;
+            list.insertAdjacentHTML('afterbegin', item);
             updateUI();
-            
-            // Reset
             document.getElementById('foodName').value = "";
             document.getElementById('foodWeight').value = "";
         }
 
         function updateUI() {
-            const remain = target - consumed;
+            let remain = targetCal - consumedCal;
             document.getElementById('cal-remaining').innerText = remain;
-            const percent = (consumed / target) * 100;
+            let percent = (consumedCal / targetCal) * 100;
             document.getElementById('progress-bar').style.width = (percent > 100 ? 100 : percent) + "%";
         }
     </script>
