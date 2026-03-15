@@ -3,85 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carbon Clone IA</title>
+    <title>Carbon Clone Dark</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F4F7FA; padding-bottom: 100px; }
-        .carbon-card { background: white; border-radius: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); padding: 20px; margin-bottom: 16px; }
-        .progress-bg { background: #E2E8F0; border-radius: 20px; height: 10px; overflow: hidden; }
-        .progress-fill { background: #3B82F6; height: 100%; transition: width 0.4s ease; width: 0%; }
-        input, select { border: 1px solid #EDF2F7; border-radius: 12px; padding: 12px; background: #F8FAFC; width: 100%; font-size: 16px; }
-        label { font-size: 11px; font-weight: 800; color: #94A3B8; text-transform: uppercase; margin-left: 5px; margin-bottom: 4px; display: block; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #94A3B8; font-weight: 600; cursor: pointer; }
-        .nav-item.active { color: #3B82F6; }
+        /* Base Styles - Inspirés de l'image (Dark Background) */
+        body { font-family: 'Inter', sans-serif; background-color: #111111; color: #FFFFFF; padding-bottom: 110px; }
+        
+        /* Cartes - Fond sombre, bords très arrondis */
+        .carbon-card { background-color: #1A1A1A; border-radius: 28px; border: 1px solid #2A2A2A; padding: 22px; margin-bottom: 18px; }
+        
+        /* Barre de Progression - Fond noir, Remplissage Orange Néon */
+        .progress-bg { background-color: #000000; border-radius: 20px; height: 12px; overflow: hidden; border: 1px solid #2A2A2A; }
+        .progress-fill { background: linear-gradient(90deg, #FF6600, #FF9933); height: 100%; transition: width 0.4s ease; width: 0%; box-shadow: 0 0 10px rgba(255, 102, 0, 0.5); }
+        
+        /* Inputs & Selects - Super Dark, Texte blanc, Bords arrondis */
+        input, select { border: 1px solid #2A2A2A; border-radius: 14px; padding: 14px; background-color: #080808; color: #FFFFFF; font-size: 16px; width: 100%; transition: border-color 0.2s; }
+        input:focus, select:focus { border-color: #FF6600; outline: none; }
+        
+        /* Labels - Texte gris clair, majuscules */
+        label { font-size: 11px; font-weight: 800; color: #A0A0A0; text-transform: uppercase; margin-left: 6px; margin-bottom: 5px; display: block; tracking-widest; }
+        
+        /* Navigation Basse - Dark, Icônes Orange */
+        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #666666; font-weight: 700; cursor: pointer; text-transform: uppercase; tracking-wider; transition: color 0.2s; }
+        .nav-item.active { color: #FF6600; }
+        .nav-icon { font-size: 22px; margin-bottom: 4px; }
+        
+        /* Boutons - Fond noir, Texte Orange Néon */
+        .btn-primary { width: 100%; background-color: #000000; color: #FF6600; font-weight: 800; font-size: 15px; text-transform: uppercase; tracking-wider; py: 4; rounded-2xl; border: 2px solid #FF6600; transition: all 0.2s; box-shadow: 0 0 15px rgba(255, 102, 0, 0.2); }
+        .btn-primary:active { transform: scale(0.97); box-shadow: 0 0 5px rgba(255, 102, 0, 0.5); }
+        
+        /* Structure des pages */
         .page { display: none; }
-        .page.active { display: block; }
+        .page.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Styles spécifiques des macros */
+        .macro-box { background-color: #080808; border: 1px solid #2A2A2A; border-radius: 16px; padding: 10px; text-center: center; }
     </style>
 </head>
 <body>
 
-    <main class="max-w-md mx-auto px-5 pt-6">
+    <main class="max-w-md mx-auto px-5 pt-8">
 
         <div id="page-home" class="page active">
-            <header class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-black text-slate-800 tracking-tight">JOURNAL</h1>
-                <div class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-bold" id="status-plan">Plan actif</div>
+            <header class="flex justify-between items-center mb-7">
+                <h1 class="text-3xl font-black text-white tracking-tighter">Mon Journal</h1>
+                <div class="bg-black text-[#FF6600] px-4 py-1.5 rounded-full text-xs font-bold border border-[#FF6600]" id="status-plan">PLAN CARB</div>
             </header>
 
             <section class="carbon-card">
-                <div class="flex justify-between items-start mb-2">
+                <div class="flex justify-between items-start mb-3">
                     <div>
-                        <p class="text-slate-400 text-[10px] font-extrabold uppercase tracking-widest">Restant</p>
-                        <h2 class="text-4xl font-black text-slate-900" id="cal-remaining">--</h2>
+                        <p class="text-[#A0A0A0] text-[10px] font-extrabold uppercase tracking-widest">Restant</p>
+                        <h2 class="text-5xl font-black text-white tracking-tighter" id="cal-remaining">--</h2>
                     </div>
                     <div class="text-right">
-                        <p class="text-[10px] text-slate-400 font-bold uppercase">Objectif</p>
-                        <p class="font-bold text-slate-700" id="cal-target-label">--</p>
+                        <p class="text-[10px] text-[#A0A0A0] font-bold uppercase tracking-wider">Objectif</p>
+                        <p class="text-xl font-extrabold text-[#FF6600]" id="cal-target-label">--</p>
                     </div>
                 </div>
-                <div class="progress-bg mb-6">
+                <div class="progress-bg mb-7">
                     <div id="progress-bar" class="progress-fill"></div>
                 </div>
-                <div class="grid grid-cols-3 gap-2">
-                    <div class="bg-slate-50 p-2 rounded-xl text-center border border-slate-100">
-                        <p class="text-[9px] text-orange-500 font-bold uppercase">Prot (g)</p>
-                        <p class="font-bold text-sm" id="p-val">0</p>
+                
+                <div class="grid grid-cols-3 gap-3">
+                    <div class="macro-box">
+                        <p class="text-[10px] text-[#A0A0A0] font-bold uppercase tracking-wider">Prot (g)</p>
+                        <p class="font-extrabold text-lg text-white" id="p-val">0</p>
                     </div>
-                    <div class="bg-slate-50 p-2 rounded-xl text-center border border-slate-100">
-                        <p class="text-[9px] text-blue-500 font-bold uppercase">Gluc (g)</p>
-                        <p class="font-bold text-sm" id="g-val">0</p>
+                    <div class="macro-box">
+                        <p class="text-[10px] text-[#A0A0A0] font-bold uppercase tracking-wider">Gluc (g)</p>
+                        <p class="font-extrabold text-lg text-white" id="g-val">0</p>
                     </div>
-                    <div class="bg-slate-50 p-2 rounded-xl text-center border border-slate-100">
-                        <p class="text-[9px] text-yellow-500 font-bold uppercase">Lip (g)</p>
-                        <p class="font-bold text-sm" id="l-val">0</p>
+                    <div class="macro-box">
+                        <p class="text-[10px] text-[#A0A0A0] font-bold uppercase tracking-wider">Lip (g)</p>
+                        <p class="font-extrabold text-lg text-white" id="l-val">0</p>
                     </div>
                 </div>
             </section>
 
-            <section class="carbon-card border-2 border-transparent focus-within:border-blue-500 transition-all">
-                <h3 class="font-bold text-sm mb-3">🍎 Enregistrer un aliment</h3>
-                <div class="space-y-3">
-                    <div class="flex gap-2">
-                        <input type="text" id="foodName" class="flex-[2]" placeholder="Ex: Poulet">
+            <section class="carbon-card">
+                <h3 class="font-bold text-sm mb-4 text-[#A0A0A0] uppercase tracking-wider">🍎 Ajouter un aliment</h3>
+                <div class="space-y-4">
+                    <div class="flex gap-3">
+                        <input type="text" id="foodName" class="flex-[2.5]" placeholder="Ex: Poulet">
                         <input type="number" id="foodWeight" class="flex-1" placeholder="g">
                     </div>
-                    <button onclick="addFood()" class="w-full bg-slate-900 text-white font-bold py-3 rounded-xl shadow-lg">Ajouter</button>
+                    <button onclick="addFood()" class="btn-primary py-4 rounded-2xl">Enregistrer</button>
                 </div>
             </section>
 
-            <div id="foodList" class="space-y-2"></div>
+            <div id="foodList" class="space-y-3"></div>
         </div>
 
         <div id="page-profile" class="page">
-            <header class="mb-6">
-                <h1 class="text-2xl font-black text-slate-800 tracking-tight">MON PROFIL</h1>
-                <p class="text-slate-400 text-sm">Configure ton coach IA</p>
+            <header class="mb-8">
+                <h1 class="text-3xl font-black text-white tracking-tighter">Profil</h1>
+                <p class="text-[#A0A0A0] text-sm mt-1">Configure ton coach IA</p>
             </header>
 
             <section class="carbon-card">
-                <div class="space-y-4">
-                    <div class="grid grid-cols-2 gap-3">
+                <div class="space-y-5">
+                    <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label>Âge</label>
                             <input type="number" id="age" placeholder="25">
@@ -94,7 +118,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label>Poids (kg)</label>
                             <input type="number" id="poids" placeholder="75">
@@ -112,27 +136,26 @@
                             <option value="300">Prise de masse</option>
                         </select>
                     </div>
-                    <button onclick="updateCoach()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95 transition-all">
-                        Enregistrer les modifications
-                    </button>
+                    <button onclick="updateCoach()" class="btn-primary py-4 rounded-2xl mt-3">Sauvegarder</button>
                 </div>
             </section>
         </div>
 
     </main>
 
-    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 px-8 py-4 flex justify-between items-center z-50 shadow-[0_-5px_20px_rgba(0,0,0,0.05)]">
+    <nav class="fixed bottom-0 left-0 right-0 bg-black border-t border-[#2A2A2A] px-10 py-5 flex justify-between items-center z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div class="nav-item active" onclick="showPage('home')">
-            <span class="text-xl">🏠</span>
+            <span class="nav-icon">🏠</span>
             <span>Journal</span>
         </div>
         <div class="nav-item" onclick="showPage('profile')">
-            <span class="text-xl">⚙️</span>
+            <span class="nav-icon">⚙️</span>
             <span>Profil</span>
         </div>
     </nav>
 
     <script>
+        // Logique de fonctionnalité (Inchassée)
         let targetCal = 2000;
         let consumedCal = 0;
 
@@ -149,16 +172,16 @@
             const t = document.getElementById('taille').value;
             const obj = parseFloat(document.getElementById('obj').value);
 
-            if(!age || !p) return alert("Remplis ton profil !");
+            if(!age || !p || !t) return alert("Remplis tout ton profil !");
 
-            // Calcul (Mifflin-St Jeor)
+            // Calcul (Mifflin-St Jeor) - Identique
             targetCal = Math.round((10 * p) + (6.25 * t) - (5 * age) + 5 + obj);
             
             document.getElementById('cal-target-label').innerText = targetCal + " kcal";
             updateUI();
-            showPage('home'); // Retour automatique au journal
+            showPage('home'); // Retour automatique
             
-            // Simulation macros
+            // Simulation macros - Identique
             document.getElementById('p-val').innerText = Math.round(p * 1.8) + "g";
             document.getElementById('g-val').innerText = Math.round(p * 3) + "g";
             document.getElementById('l-val').innerText = Math.round(p * 0.8) + "g";
@@ -169,13 +192,14 @@
             const weight = parseFloat(document.getElementById('foodWeight').value);
             if(!name || !weight) return;
 
-            const cal = Math.round(weight * 1.5); // Simulation
+            const cal = Math.round(weight * 1.5); // Simulation - Identique
             consumedCal += cal;
             
             const list = document.getElementById('foodList');
-            const item = `<div class="bg-white p-4 rounded-2xl flex justify-between items-center shadow-sm border border-slate-50">
-                <div><p class="font-bold text-slate-800">${name}</p><p class="text-xs text-slate-400">${weight}g</p></div>
-                <span class="font-bold text-blue-600">+${cal} kcal</span>
+            // Nouveau style d'item de liste (Dark)
+            const item = `<div class="bg-[#1A1A1A] border border-[#2A2A2A] p-5 rounded-2xl flex justify-between items-center shadow-inner">
+                <div><p class="font-bold text-white text-lg tracking-tight">${name}</p><p class="text-xs text-[#A0A0A0]">${weight}g</p></div>
+                <span class="font-black text-[#FF6600] text-xl">+${cal} kcal</span>
             </div>`;
             list.insertAdjacentHTML('afterbegin', item);
             updateUI();
