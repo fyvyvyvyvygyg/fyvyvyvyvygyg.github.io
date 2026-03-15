@@ -7,136 +7,130 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F4F7FA; }
-        .carbon-card { background: white; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.03); padding: 20px; margin-bottom: 20px; }
-        .progress-bg { background: #E2E8F0; border-radius: 10px; height: 12px; overflow: hidden; }
-        .progress-fill { background: linear-gradient(90deg, #3B82F6, #2563EB); height: 100%; transition: width 0.5s ease; width: 0%; }
-        input, select { border: 1px solid #E2E8F0; border-radius: 12px; padding: 12px; font-size: 16px; width: 100%; background: #fcfcfc; }
-        label { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-left: 4px; }
+        body { font-family: 'Inter', sans-serif; background-color: #F4F7FA; padding-bottom: 100px; }
+        .carbon-card { background: white; border-radius: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); padding: 20px; margin-bottom: 16px; }
+        .progress-bg { background: #E2E8F0; border-radius: 20px; height: 10px; overflow: hidden; }
+        .progress-fill { background: #3B82F6; height: 100%; transition: width 0.4s ease; width: 0%; }
+        input, select { border: 1px solid #EDF2F7; border-radius: 12px; padding: 12px; background: #F8FAFC; width: 100%; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #94A3B8; font-weight: 600; }
+        .nav-item.active { color: #3B82F6; }
     </style>
 </head>
-<body class="pb-24">
+<body>
 
-    <nav class="p-6 flex justify-between items-center">
-        <div>
-            <p class="text-slate-500 text-sm">Tableau de bord</p>
-            <h1 class="text-2xl font-extrabold text-slate-800">Mon Coach IA 🍏</h1>
-        </div>
-    </nav>
+    <header class="p-6 flex justify-between items-center">
+        <h1 class="text-2xl font-black text-slate-800 tracking-tight">JOURNAL</h1>
+        <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center">👤</div>
+    </header>
 
-    <main class="max-w-md mx-auto px-6">
+    <main class="max-w-md mx-auto px-5">
 
-        <section class="carbon-card border-t-4 border-blue-500">
-            <div class="flex justify-between items-end mb-4">
+        <section class="carbon-card">
+            <div class="flex justify-between items-start mb-2">
                 <div>
-                    <p class="text-slate-500 text-xs uppercase font-bold tracking-wider">Restant</p>
-                    <h2 class="text-4xl font-black text-slate-900" id="cal-remaining">--</h2>
+                    <p class="text-slate-400 text-[10px] font-extrabold uppercase tracking-widest">Calories restantes</p>
+                    <h2 class="text-4xl font-black text-slate-900" id="cal-remaining">2000</h2>
                 </div>
-                <div class="text-right">
-                    <p class="text-xs text-slate-400">Objectif: <span id="cal-target">--</span></p>
+                <div class="bg-blue-50 p-2 rounded-lg">
+                    <span class="text-blue-600 font-bold text-xs" id="cal-target-label">Obj: 2000</span>
                 </div>
             </div>
-            <div class="progress-bg mb-6">
+            <div class="progress-bg mb-4">
                 <div id="progress-bar" class="progress-fill"></div>
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+                <div class="bg-slate-50 p-2 rounded-xl text-center">
+                    <p class="text-[9px] text-orange-500 font-bold uppercase">Protéines</p>
+                    <p class="font-bold text-sm" id="p-val">0g</p>
+                </div>
+                <div class="bg-slate-50 p-2 rounded-xl text-center">
+                    <p class="text-[9px] text-blue-500 font-bold uppercase">Glucides</p>
+                    <p class="font-bold text-sm" id="g-val">0g</p>
+                </div>
+                <div class="bg-slate-50 p-2 rounded-xl text-center">
+                    <p class="text-[9px] text-yellow-500 font-bold uppercase">Lipides</p>
+                    <p class="font-bold text-sm" id="l-val">0g</p>
+                </div>
             </div>
         </section>
 
-        <section class="carbon-card">
-            <h3 class="font-bold text-lg mb-4 text-slate-800">⚙️ Ton Profil</h3>
-            <div class="space-y-4">
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label>Âge</label>
-                        <input type="number" id="age" placeholder="Ex: 25">
-                    </div>
-                    <div>
-                        <label>Sexe</label>
-                        <select id="sexe">
-                            <option value="homme">Homme</option>
-                            <option value="femme">Femme</option>
-                        </select>
-                    </div>
+        <section class="carbon-card border-2 border-transparent focus-within:border-blue-500 transition-all">
+            <h3 class="font-bold text-sm mb-3 flex items-center gap-2">🍎 Ajouter un aliment</h3>
+            <div class="space-y-3">
+                <div class="flex gap-2">
+                    <input type="text" id="foodName" class="flex-[2]" placeholder="Aliment (ex: Poulet)">
+                    <input type="number" id="foodWeight" class="flex-1" placeholder="Poids (g)">
                 </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label>Poids (kg)</label>
-                        <input type="number" id="poids" placeholder="75">
-                    </div>
-                    <div>
-                        <label>Taille (cm)</label>
-                        <input type="number" id="taille" placeholder="180">
-                    </div>
-                </div>
-                <div>
-                    <label>Activité</label>
-                    <select id="activite">
-                        <option value="1.2">Sédentaire</option>
-                        <option value="1.375">Léger (1-2x/sem)</option>
-                        <option value="1.55">Modéré (3-4x/sem)</option>
-                        <option value="1.725">Intense (6x/sem)</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Objectif</label>
-                    <select id="obj">
-                        <option value="-500">Perte de poids</option>
-                        <option value="0">Maintien</option>
-                        <option value="300">Prise de masse</option>
-                    </select>
-                </div>
-                <button onclick="updateCoach()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95 transition-all mt-2">
-                    Calculer mon plan Carbon
+                <button onclick="addFood()" class="w-full bg-slate-900 text-white font-bold py-3 rounded-xl shadow-lg">
+                    Enregistrer l'aliment
                 </button>
             </div>
         </section>
 
-        <section class="carbon-card border-l-4 border-orange-400">
-            <h3 class="font-bold mb-3">🍽️ Enregistrer un repas</h3>
-            <div class="space-y-3">
-                <input type="text" id="mealDesc" placeholder="Ex: Poulet, riz, brocolis...">
-                <button onclick="logMeal()" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold">Ajouter au journal</button>
+        <div id="foodList" class="space-y-2">
             </div>
-        </section>
 
     </main>
 
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 px-6 py-3 flex justify-between items-center z-50">
+        <div class="nav-item active">
+            <span class="text-xl">🏠</span>
+            <span>Dashboard</span>
+        </div>
+        <div class="nav-item">
+            <span class="text-xl">📝</span>
+            <span>Journal</span>
+        </div>
+        <div class="nav-item">
+            <span class="text-xl">📊</span>
+            <span>Progrès</span>
+        </div>
+        <div class="nav-item">
+            <span class="text-xl">⚙️</span>
+            <span>Profil</span>
+        </div>
+    </nav>
+
     <script>
-        let targetCal = 0;
-        let consumedCal = 0;
+        let target = 2000;
+        let consumed = 0;
+        let prot = 0, gluc = 0, lip = 0;
 
-        function updateCoach() {
-            const age = parseFloat(document.getElementById('age').value);
-            const poids = parseFloat(document.getElementById('poids').value);
-            const taille = parseFloat(document.getElementById('taille').value);
-            const sexe = document.getElementById('sexe').value;
-            const activite = parseFloat(document.getElementById('activite').value);
-            const objectif = parseFloat(document.getElementById('obj').value);
+        function addFood() {
+            const name = document.getElementById('foodName').value;
+            const weight = parseFloat(document.getElementById('foodWeight').value);
 
-            if(!age || !poids || !taille) return alert("Complète toutes les cases !");
+            if(!name || !weight) return alert("Précise l'aliment et le poids !");
 
-            // Formule Mifflin-St Jeor exacte
-            let bmr = (10 * poids) + (6.25 * taille) - (5 * age);
-            bmr = (sexe === "homme") ? bmr + 5 : bmr - 161;
+            // Calcul fictif (on simulera une base de données après)
+            // Moyenne : 1.5 kcal par gramme pour l'exemple
+            const calAdded = Math.round(weight * 1.5);
+            consumed += calAdded;
             
-            targetCal = Math.round((bmr * activite) + objectif);
-            
-            document.getElementById('cal-target').innerText = targetCal;
-            updateUI();
-        }
+            // Ajout visuel dans la liste
+            const list = document.getElementById('foodList');
+            const item = document.createElement('div');
+            item.className = "bg-white p-3 rounded-xl flex justify-between items-center shadow-sm border border-slate-50";
+            item.innerHTML = `
+                <div>
+                    <p class="font-bold text-slate-800">${name}</p>
+                    <p class="text-xs text-slate-400">${weight}g</p>
+                </div>
+                <span class="font-bold text-blue-600">+${calAdded} kcal</span>
+            `;
+            list.prepend(item);
 
-        function logMeal() {
-            if(targetCal === 0) return alert("Calcule d'abord ton profil !");
-            // Pour l'instant on simule 400 calories par repas
-            consumedCal += 400; 
             updateUI();
-            document.getElementById('mealDesc').value = "";
+            
+            // Reset
+            document.getElementById('foodName').value = "";
+            document.getElementById('foodWeight').value = "";
         }
 
         function updateUI() {
-            let remaining = targetCal - consumedCal;
-            document.getElementById('cal-remaining').innerText = remaining;
-            
-            let percent = (consumedCal / targetCal) * 100;
+            const remain = target - consumed;
+            document.getElementById('cal-remaining').innerText = remain;
+            const percent = (consumed / target) * 100;
             document.getElementById('progress-bar').style.width = (percent > 100 ? 100 : percent) + "%";
         }
     </script>
