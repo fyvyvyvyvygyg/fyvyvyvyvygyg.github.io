@@ -7,63 +7,51 @@
     <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkNvYWNoIE51dHJpdGlvbiBJQSIsCiAgInNob3J0X25hbWUiOiAiTnV0cmlJQSIsCiAgInN0YXJ0X3VybCI6ICIuIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmYmZmIiwKICAidGhlbWVfY29sb3IiOiAiIzIyYzU1ZSIKfQ==">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        .card { background: white; border-radius: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        input, select { background: #f8fafc; border: 1px solid #e2e8f0; padding: 0.75rem; border-radius: 0.75rem; width: 100%; outline: none; }
-        input:focus { border-color: #22c55e; ring: 2px #22c55e; }
+        body { font-family: -apple-system, sans-serif; }
+        .card { background: white; border-radius: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); padding: 1.5rem; margin-bottom: 1.5rem; }
+        input { background: #f8fafc; border: 1px solid #e2e8f0; padding: 0.75rem; border-radius: 0.75rem; width: 100%; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 min-h-screen">
+<body class="bg-slate-50 text-slate-900 min-h-screen pb-10">
 
-    <header class="bg-green-600 text-white p-6 rounded-b-[2.5rem] shadow-lg">
-        <div class="max-w-md mx-auto">
-            <h1 class="text-2xl font-bold text-center">Coach Nutri IA 🍏</h1>
-        </div>
+    <header class="bg-green-600 text-white p-6 rounded-b-[2.5rem] shadow-lg mb-6">
+        <h1 class="text-2xl font-bold text-center">Mon Coach Perso 🍏</h1>
     </header>
 
-    <main class="max-w-md mx-auto p-4 space-y-6">
+    <main class="max-w-md mx-auto px-4">
         
-        <section id="profil-section" class="card p-6 border-t-4 border-green-500">
-            <h2 class="font-bold text-xl mb-4">Étape 1 : Ton Profil</h2>
-            <div class="space-y-4">
-                <div class="grid grid-cols-2 gap-3">
+        <section class="card border-t-4 border-green-500">
+            <h2 class="font-bold text-xl mb-4">🔧 Calculateur</h2>
+            <div class="space-y-3">
+                <div class="grid grid-cols-2 gap-2">
                     <input type="number" id="age" placeholder="Âge">
-                    <select id="sexe">
-                        <option value="homme">Homme</option>
-                        <option value="femme">Femme</option>
-                    </select>
+                    <select id="sexe" class="p-3 bg-slate-50 border rounded-xl"><option value="homme">Homme</option><option value="femme">Femme</option></select>
                 </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <input type="number" id="poids" placeholder="Poids (kg)">
+                <div class="grid grid-cols-2 gap-2">
+                    <input type="number" id="poids_init" placeholder="Poids (kg)">
                     <input type="number" id="taille" placeholder="Taille (cm)">
                 </div>
-                <select id="activite">
-                    <option value="1.2">Sédentaire (Bureau)</option>
-                    <option value="1.375">Léger (1-2 fois/sem)</option>
-                    <option value="1.55">Modéré (3-4 fois/sem)</option>
-                    <option value="1.725">Actif (Quotidien)</option>
-                </select>
-                <button onclick="calculerBesoins()" class="w-full bg-green-600 text-white font-bold py-3 rounded-xl shadow-md active:scale-95 transition-all">
-                    Calculer mes besoins
-                </button>
+                <button onclick="calculerBesoins()" class="w-full bg-green-600 text-white font-bold py-3 rounded-xl">Calculer</button>
+            </div>
+            <div id="resultats" class="hidden mt-4 p-4 bg-green-50 rounded-xl border border-green-100">
+                <p class="text-sm">Objectif : <span id="target-val" class="text-xl font-bold text-green-700">--</span> kcal / jour</p>
             </div>
         </section>
 
-        <section id="resultats" class="card p-6 hidden bg-green-50 border border-green-200">
-            <h3 class="font-bold text-lg mb-2 text-green-800">Tes Objectifs :</h3>
-            <div class="space-y-2 text-sm">
-                <p>🔥 Métabolisme de base (BMR) : <span id="bmr-val" class="font-bold text-lg"></span> kcal</p>
-                <p>⚡ Dépense totale (TDEE) : <span id="tdee-val" class="font-bold text-lg"></span> kcal</p>
-                <hr class="my-3 border-green-200">
-                <p class="text-green-700 font-medium">🎯 Objectif Perte (-500 kcal) :</p>
-                <p class="text-2xl font-black text-green-600"><span id="target-val"></span> kcal / jour</p>
+        <section class="card border-t-4 border-blue-500">
+            <h2 class="font-bold text-xl mb-4">⚖️ Suivi du Poids</h2>
+            <div class="flex gap-2 mb-4">
+                <input type="number" id="poids_jour" step="0.1" placeholder="Poids d'aujourd'hui">
+                <button onclick="savePoids()" class="bg-blue-600 text-white px-4 rounded-xl font-bold">OK</button>
             </div>
+            <div id="historique" class="space-y-2 text-sm text-slate-600">
+                </div>
         </section>
 
-        <section class="card p-6">
-            <h2 class="font-bold mb-3">📸 Analyse de repas</h2>
-            <textarea id="mealInput" class="w-full p-3 border border-slate-200 rounded-xl mb-3" rows="2" placeholder="Ex: Salade césar et un yaourt..."></textarea>
-            <button onclick="alert('Analyse en cours...')" class="w-full bg-slate-800 text-white py-3 rounded-xl font-bold">Analyser</button>
+        <section class="card border-t-4 border-orange-500">
+            <h2 class="font-bold mb-3">📸 Journal Repas</h2>
+            <textarea id="mealInput" class="w-full p-3 border rounded-xl mb-3" rows="2" placeholder="Ex: 2 oeufs, 1 avocat..."></textarea>
+            <button class="w-full bg-slate-800 text-white py-3 rounded-xl font-bold">Analyser avec l'IA</button>
         </section>
 
     </main>
@@ -71,32 +59,32 @@
     <script>
         function calculerBesoins() {
             const age = parseFloat(document.getElementById('age').value);
-            const poids = parseFloat(document.getElementById('poids').value);
+            const poids = parseFloat(document.getElementById('poids_init').value);
             const taille = parseFloat(document.getElementById('taille').value);
             const sexe = document.getElementById('sexe').value;
-            const activite = parseFloat(document.getElementById('activite').value);
-
-            if (!age || !poids || !taille) return alert("Remplis toutes les infos !");
-
-            // Formule Mifflin-St Jeor
-            let bmr;
-            if (sexe === "homme") {
-                bmr = (10 * poids) + (6.25 * taille) - (5 * age) + 5;
-            } else {
-                bmr = (10 * poids) + (6.25 * taille) - (5 * age) - 161;
-            }
-
-            const tdee = bmr * activite;
-            const target = tdee - 500; // Déficit modéré par défaut
-
-            document.getElementById('bmr-val').innerText = Math.round(bmr);
-            document.getElementById('tdee-val').innerText = Math.round(tdee);
-            document.getElementById('target-val').innerText = Math.round(target);
+            let bmr = (sexe === "homme") ? (10 * poids + 6.25 * taille - 5 * age + 5) : (10 * poids + 6.25 * taille - 5 * age - 161);
+            document.getElementById('target-val').innerText = Math.round(bmr * 1.3 - 500);
             document.getElementById('resultats').classList.remove('hidden');
-            
-            // Scroll doux vers le résultat
-            document.getElementById('resultats').scrollIntoView({ behavior: 'smooth' });
         }
+
+        function savePoids() {
+            const p = document.getElementById('poids_jour').value;
+            if(!p) return;
+            const date = new Date().toLocaleDateString('fr-FR');
+            let data = JSON.parse(localStorage.getItem('suiviPoids') || '[]');
+            data.unshift({date, p}); // Ajoute au début
+            localStorage.setItem('suiviPoids', JSON.stringify(data.slice(0, 5))); // Garde les 5 derniers
+            displayPoids();
+        }
+
+        function displayPoids() {
+            let data = JSON.parse(localStorage.getItem('suiviPoids') || '[]');
+            const div = document.getElementById('historique');
+            div.innerHTML = data.map(i => `<div class="flex justify-between border-b pb-1"><span>${i.date}</span><b>${i.p} kg</b></div>`).join('');
+        }
+
+        // Charger l'historique au démarrage
+        displayPoids();
     </script>
 </body>
 </html>
